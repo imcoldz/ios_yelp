@@ -17,7 +17,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2Ds-cw-3uO">
-                    <rect key="frame" x="8" y="107" width="359" height="29"/>
+                    <rect key="frame" x="8" y="111.5" width="359" height="29"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <segments>
                         <segment title="$"/>
@@ -30,11 +30,11 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f2v-jO-slp">
                     <rect key="frame" x="8" y="80" width="37" height="19.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="textColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="6" sectionFooterHeight="6" translatesAutoresizingMaskIntoConstraints="NO" id="HU9-iN-Mk1">
-                    <rect key="frame" x="8" y="136" width="359" height="531"/>
+                    <rect key="frame" x="8" y="151.5" width="359" height="515.5"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -49,8 +49,8 @@
             </subviews>
             <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="HU9-iN-Mk1" firstAttribute="top" secondItem="2Ds-cw-3uO" secondAttribute="bottom" constant="1" id="2Su-tp-OHX"/>
-                <constraint firstItem="2Ds-cw-3uO" firstAttribute="top" secondItem="f2v-jO-slp" secondAttribute="bottom" constant="8" id="2rh-ba-tuo"/>
+                <constraint firstItem="HU9-iN-Mk1" firstAttribute="top" secondItem="2Ds-cw-3uO" secondAttribute="bottom" constant="12" id="2Su-tp-OHX"/>
+                <constraint firstItem="2Ds-cw-3uO" firstAttribute="top" secondItem="f2v-jO-slp" secondAttribute="bottom" constant="12" id="2rh-ba-tuo"/>
                 <constraint firstAttribute="bottom" secondItem="HU9-iN-Mk1" secondAttribute="bottom" id="EsD-TZ-OYA"/>
                 <constraint firstItem="f2v-jO-slp" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="IZc-Ce-Ybd"/>
                 <constraint firstItem="HU9-iN-Mk1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="U5J-jq-PBV"/>

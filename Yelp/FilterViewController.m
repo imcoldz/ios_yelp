@@ -165,7 +165,26 @@
     
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 35.0;
+}
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger) section
+{
+    //section text as a label
+    UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 30)];
+    if(section == 0){
+        lbl.text = @"Category";
+    }
+    else{
+        lbl.text = @"Sort by";
+    }
+    lbl.textColor = [UIColor grayColor];
+    lbl.font = [UIFont systemFontOfSize:16];
+    return lbl;
+}
+
+/*
 // Add header titles in sections.
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if (section == 0) {
@@ -177,7 +196,7 @@
     else{
         return @"Distance";
     }
-}
+}*/
 
 // Set the row height.
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
