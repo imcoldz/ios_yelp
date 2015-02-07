@@ -22,9 +22,11 @@
         //NSLog(@"categories string is %@", self.categories);
         self.name = dictionary[@"name"];
         self.imageUrl = dictionary[@"image_url"];
-        NSString *street = [dictionary valueForKeyPath:@"location.address"][0];
+        NSString *street = @"N/A";
+        if([[dictionary valueForKeyPath:@"location.address"] count] > 0 ){
+            street = [dictionary valueForKeyPath:@"location.address"][0];
+        }
         NSString *city = [dictionary valueForKeyPath:@"location.city"];
-       
         self.address = [NSString stringWithFormat:@"%@, %@", street, city];
         self.numReviews = [dictionary[@"review_count"] integerValue];
         self.ratingImageUrl = dictionary[@"rating_img_url"];

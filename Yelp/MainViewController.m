@@ -10,6 +10,7 @@
 #import "YelpClient.h"
 #import "Business.h"
 #import "BusinessCell.h"
+#import "FilterViewController.h"
 
 
 NSString * const kYelpConsumerKey = @"vxKwwcR_NMQ7WaEiQBK_CA";
@@ -17,7 +18,7 @@ NSString * const kYelpConsumerSecret = @"33QCvh5bIF5jIHR5klQr7RtBDhQ";
 NSString * const kYelpToken = @"uRcRswHFYa1VkDrGV6LAW2F8clGh5JHV";
 NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
-@interface MainViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+@interface MainViewController ()<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, FilterViewControllerDelegate>
 
 @property (nonatomic, strong) YelpClient *client;
 @property (nonatomic, strong) NSArray *businesses;
@@ -41,8 +42,8 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     return self;
 }
 
-- (void) sendQueryToYelp:(NSString *) searchterm{
-    [self.client searchWithTerm:searchterm success:^(AFHTTPRequestOperation *operation, id response) {
+- (void) sendQueryToYelp:(NSString *)searchterm params:(NSDictionary *)params{
+    [self.client searchWithTerm:searchterm params:params success:^(AFHTTPRequestOperation *operation, id response) {
         NSLog(@"response: %@", response);
         NSArray *businessesDictionaries = response[@"businesses"];
         self.businesses = [Business businessesWithDictionaries: businessesDictionaries];
@@ -51,6 +52,10 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error: %@", [error description]);
     }];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.businessTableView reloadData];
 }
 
 - (void)viewDidLoad
@@ -63,15 +68,18 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     [self.businessTableView registerNib:[UINib nibWithNibName:@"BusinessCell" bundle:nil] forCellReuseIdentifier:@"BusinessCell"];
     
     self.businessTableView.rowHeight = UITableViewAutomaticDimension;
-    self.title = @"Yelp";
+    
     NSInteger quaterLength = (NSInteger) self.navigationController.navigationBar.frame.size.width/4;
-    self.searchBar =  [[UISearchBar alloc] initWithFrame:CGRectMake(quaterLength, 0, quaterLength*2, 50)];
+    self.searchBar =  [[UISearchBar alloc] initWithFrame:CGRectMake(quaterLength, 0, quaterLength*2.2, 50)];
     self.searchBar.delegate = self;
     [self.navigationController.navigationBar addSubview:self.searchBar];
+    //self.navigationItem.titleView = self.searchBar;
     self.navigationController.navigationBar.barTintColor = [UIColor redColor];
     
-    self.searchTerm = @"duck";
-    [self  sendQueryToYelp:self.searchTerm];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target: self action:@selector(onFilterButton)];
+    
+    self.searchTerm = @"Restaurants";
+    [self  sendQueryToYelp:self.searchTerm params:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -99,6 +107,22 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     [self.searchBar resignFirstResponder];
     // Do the search...
     self.searchTerm = self.searchBar.text;
-    [self  sendQueryToYelp:self.searchTerm];
+    [self  sendQueryToYelp:self.searchTerm params:nil];
 }
+
+#pragma mark - Filter delegate methods
+- (void)filterViewController:(FilterViewController *)filterViewController didChangeFilters:(NSDictionary *)filters{
+    NSLog(@"fire new network event: %@", filters);
+    [self sendQueryToYelp:self.searchTerm params:filters];
+}
+
+#pragma mark - Private methods
+
+- (void)onFilterButton {
+    FilterViewController * fvc = [[FilterViewController alloc] init];
+    fvc.delegate = self;
+    UINavigationController * nvc = [[UINavigationController alloc] initWithRootViewController:fvc];
+    [self presentViewController:nvc animated:YES completion:nil];
+}
+
 @end
